@@ -54,6 +54,7 @@ public class OAuthAttributes {
                 .build();
     }
 
+    // User Entity 형성
     public User toEntity() {
         return User.builder()
                 .name(name)

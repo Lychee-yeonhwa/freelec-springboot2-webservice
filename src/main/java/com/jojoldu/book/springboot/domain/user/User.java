@@ -31,6 +31,8 @@ public class User extends BaseTimeEntity {
     @Column
     private String picture;
 
+    // Enum 값을 어떻게 저장할지 결정
+    // Default = int
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;

@@ -13,17 +13,20 @@ import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Component
+// 조건에 맞는 경우 메소드가 있다면 지정한 값으로 해당 메소드의 파라미터로 넘김
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final HttpSession httpSession;
 
+    // 컨트롤러 메서드의 특정 파라미터를 지원하는지 판단
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null;
-        boolean isUserClass = SessionUser.class.equals(parameter.getParameterType());
+        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null; // LoginUser 어노테이션 유무
+        boolean isUserClass = SessionUser.class.equals(parameter.getParameterType()); // 파라미터 클래스타입 SessionUser.class 인지
         return isLoginUserAnnotation && isUserClass;
     }
 
+    // 파라미터에 전달할 객체를 생성
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         return httpSession.getAttribute("user");
