@@ -24,3 +24,20 @@ notifications:
   email:
     recipients:
       - yunha212@gsitm.com
+
+#Travis CI에서 빌드해 만든 파일을 S3에 담음
+before_deploy:
+  - zip -r springboot-webservice-project
+  - mkdir -p deploy
+  - mv springboot-webservice-project.zip deploy/springboot-webservice-project.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: springboot-webservice-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
