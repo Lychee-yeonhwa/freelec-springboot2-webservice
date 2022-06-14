@@ -19,12 +19,6 @@ before_install:
 script:
   - './gradlew clean build'
 
-#CI 실행 완료 시 메일로 알람
-notifications:
-  email:
-    recipients:
-      - yunha212@gsitm.com
-
 #Travis CI에서 빌드해 만든 파일을 S3에 담음
 before_deploy:
   - zip -r springboot-webservice *
@@ -41,8 +35,20 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
-    on:
-      repo: Lychee-yeonhwa/freelec-springboot2-webservice
-      branch: master
 
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
+    bucket: yunha212-springboot-build  # S3 버킷
+    key: springboot-webservice.zip # S3 버킷에 저장된 springboot-webservice.zip 파일을 EC2로 배포
+    bundle_type: zip # 압축 확장자
+    application: yunha212-springboot2-webservcie      # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
+    deployment_group: yunha212-springboot2-webservcie-group      # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
+    region: ap-northeast-2
+    wait-until-deployed: true
 
+#CI 실행 완료 시 메일로 알람
+notifications:
+  email:
+    recipients:
+      - yunha212@gsitm.com
