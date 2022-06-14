@@ -27,9 +27,9 @@ notifications:
 
 #Travis CI에서 빌드해 만든 파일을 S3에 담음
 before_deploy:
-  - zip -r freelec-springboot2-webservice
+  - zip -r springboot-webservice *
   - mkdir -p deploy
-  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+  - mv springboot-webservice.zip deploy/springboot-webservice.zip
 
 deploy:
   - provider: s3
