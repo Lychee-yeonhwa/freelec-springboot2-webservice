@@ -25,6 +25,7 @@ script:
 #  - mkdir -p deploy
 #  - mv springboot-webservice.zip deploy/springboot-webservice.zip
 
+#step2
 before_deploy:
   - mkdir -p before-deploy
   - cp scripts/*.sh before-deploy/
