@@ -41,3 +41,14 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
+
+  - provider: codedeploy
+      assess_key_id: $AWS_ACCESS_KEY
+      secret_access_key: $AWS_SECRET_KEY
+      bucket: kchung1995-springboot-build
+      key: springboot-web-practise.zip
+      bundle_type: zip
+      application: springboot-web-practise
+      deployment_group: springboot-web-practise
+      region: ap-northeast-2
+      wait-until-deployed: true
